@@ -723,7 +723,6 @@ function rNoteEditor(){
   const noteStyle=bg?'background:'+bg+';':'';
 
   return '<div class="note-edit-wrap">'
-    // Row 1: back + author + save
     +'<div class="note-edit-toolbar" style="margin-bottom:8px">'
     +'<button class="btn bg bs" data-action="note-back">← 返回</button>'
     +'<div style="width:1px;height:20px;background:var(--border);margin:0 4px"></div>'
@@ -737,39 +736,30 @@ function rNoteEditor(){
     +'<button class="btn bp bs" data-action="note-save">儲存</button>'
     +'</div>'
     +'</div>'
-    // Row 2: formatting tools
     +'<div class="note-edit-toolbar" style="background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:7px 10px;margin-bottom:12px;gap:6px;flex-wrap:wrap">'
-    // font size
     +'<button class="fsize-btn" data-action="note-smaller" title="縮小字體">A−</button>'
     +'<span style="font-size:11px;color:var(--text3);min-width:26px;text-align:center" id="fsizeLabel">'+noteFontSize+'</span>'
     +'<button class="fsize-btn" data-action="note-larger" title="放大字體">A+</button>'
     +'<div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>'
-    // text format
     +'<button class="fsize-btn" data-action="note-bold" title="粗體"><b>B</b></button>'
     +'<button class="fsize-btn" data-action="note-italic" title="斜體"><i>I</i></button>'
     +'<button class="fsize-btn" data-action="note-underline" title="底線" style="text-decoration:underline">U</button>'
     +'<div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>'
-    // headings
     +'<button class="fsize-btn" data-action="note-h1" title="大標題" style="font-size:11px;font-weight:700;width:auto;padding:0 7px">H1</button>'
     +'<button class="fsize-btn" data-action="note-h2" title="小標題" style="font-size:10px;font-weight:700;width:auto;padding:0 7px">H2</button>'
     +'<div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>'
-    // lists
     +'<button class="fsize-btn" data-action="note-ul" title="項目清單" style="width:auto;padding:0 7px;font-size:12px">• 清單</button>'
     +'<button class="fsize-btn" data-action="note-ol" title="編號清單" style="width:auto;padding:0 7px;font-size:12px">1. 清單</button>'
     +'<button class="fsize-btn" data-action="note-check" title="核取清單" style="width:auto;padding:0 7px;font-size:12px">☐ 核取</button>'
     +'<div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>'
-    // divider
     +'<button class="fsize-btn" data-action="note-hr" title="分隔線" style="width:auto;padding:0 7px;font-size:12px">— 分隔</button>'
     +'<div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>'
-    // image
     +'<button class="fsize-btn" data-action="note-img" title="插入圖片" style="width:auto;padding:0 7px;font-size:12px">🖼 圖片</button>'
     +'<input type="file" id="noteImgInput" accept="image/*" style="display:none">'
     +'<div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>'
-    // background color
     +'<span style="font-size:10px;color:var(--text3)">底色</span>'
     +colorBtns
     +'</div>'
-    // title + body
     +'<input class="note-title-input" id="noteTitleInput" placeholder="標題（選填）" value="'+title+'"/>'
     +'<div class="note-body" id="noteBodyInput" contenteditable="true" style="font-size:'+noteFontSize+'px;'+noteStyle+'" data-placeholder="開始寫筆記..."></div>'
     +'</div>';

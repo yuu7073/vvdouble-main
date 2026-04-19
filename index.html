@@ -38,7 +38,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .brand-name{font-family:'DM Serif Display',serif;font-size:15px;color:var(--accent);letter-spacing:2px;}
 .brand-sub{font-size:9px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;margin-top:2px;}
 .nav-sec{font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:14px 18px 5px;}
-.ni{display:flex;align-items:center;gap:8px;padding:8px 18px;cursor:pointer;font-size:13px;color:var(--text2);transition:all .15s;border-left:2px solid transparent;user-select:none;}
+.ni{display:flex;align-items:center;gap:8px;padding:9px 18px;cursor:pointer;font-size:14px;color:var(--text2);transition:all .15s;border-left:2px solid transparent;user-select:none;}
 .ni:hover{color:var(--text);background:var(--bg2);}
 .ni.active{color:var(--accent);border-left-color:var(--accent);background:var(--accent-s);font-weight:500;}
 .nicon{font-size:13px;width:16px;text-align:center;}
@@ -55,7 +55,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:13px 26px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
 .ptitle{font-family:'DM Serif Display',serif;font-size:19px;}
 .tr{display:flex;gap:7px;align-items:center;}
-.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:20px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;border:none;font-weight:500;}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:20px;font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;border:none;font-weight:500;}
 .bp{background:var(--accent);color:#fff;}.bp:hover{filter:brightness(1.08);}
 .bg{background:transparent;color:var(--text2);border:1.5px solid var(--border2);}.bg:hover{color:var(--text);border-color:var(--text3);}
 .bs{padding:5px 11px;font-size:11px;}
@@ -69,18 +69,48 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .scol{display:flex;flex-direction:column;gap:14px;overflow-y:auto;min-height:0;}
 
 /* CARDS */
-.sc{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:15px 17px;}
-.sc-t{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:11px;display:flex;align-items:center;justify-content:space-between;}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:17px 19px;}
+.sc-t{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:11px;display:flex;align-items:center;justify-content:space-between;}
+
+/* TODAY WIDGETS */
+.today-widgets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.widget{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 15px;}
+.widget-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.widget-val{font-size:22px;font-family:'DM Serif Display',serif;color:var(--text);line-height:1.1;}
+.widget-sub{font-size:11px;color:var(--text3);margin-top:3px;}
+.weather-icon{font-size:28px;margin-bottom:4px;}
+.progress-ring{display:flex;align-items:center;gap:10px;}
+.ring-wrap{position:relative;width:48px;height:48px;flex-shrink:0;}
+.ring-wrap svg{transform:rotate(-90deg);}
+.ring-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--accent);}
+
+.countdown-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.cd-card{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:10px 13px;display:flex;align-items:center;gap:10px;position:relative;min-width:140px;cursor:pointer;}
+.cd-card:hover{border-color:var(--border2);}
+.cd-days{font-size:22px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--accent);line-height:1;}
+.cd-label{font-size:12px;color:var(--text2);margin-top:2px;}
+.cd-del{position:absolute;top:5px;right:7px;font-size:12px;color:var(--text3);cursor:pointer;background:none;border:none;opacity:0;}
+.cd-card:hover .cd-del{opacity:1;}
+.cd-del:hover{color:var(--uh);}
+.cd-add{padding:8px 12px;border:1.5px dashed var(--border2);border-radius:11px;background:transparent;color:var(--text3);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;align-self:center;}
+.cd-add:hover{border-color:var(--accent);color:var(--accent);}
+
+.quick-add{display:flex;gap:8px;margin-bottom:14px;align-items:center;}
+.quick-input{flex:1;background:var(--surface);border:1.5px solid var(--border);border-radius:9px;padding:10px 13px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;transition:border-color .15s;}
+.quick-input:focus{border-color:var(--accent);}
+.quick-input::placeholder{color:var(--text3);}
+.quick-cat{background:var(--bg2);border:1.5px solid var(--border);border-radius:9px;padding:10px 10px;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text2);outline:none;cursor:pointer;}
+.quick-cat:focus{border-color:var(--accent);}
 
 /* TODAY */
-.thl{font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:2px;}
-.tsub{font-size:11px;color:var(--text3);margin-bottom:12px;}
+.thl{font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:2px;}
+.tsub{font-size:13px;color:var(--text3);margin-bottom:12px;}
 .ug{margin-bottom:12px;}
-.ul{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
+.ul{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
 .uln{flex:1;height:1px;background:var(--border);}
 
 /* TASK */
-.ti{display:flex;align-items:center;gap:9px;padding:9px 11px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;margin-bottom:4px;cursor:pointer;transition:all .15s;}
+.ti{display:flex;align-items:center;gap:10px;padding:11px 13px;background:var(--surface2);border:1px solid var(--border);border-radius:9px;margin-bottom:4px;cursor:pointer;transition:all .15s;}
 .ti:hover{border-color:var(--border2);box-shadow:var(--sh);}
 .ti.done{opacity:.45;}.ti.done .tt{text-decoration:line-through;}
 .tck{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;color:#fff;transition:all .15s;cursor:pointer;}
@@ -89,18 +119,18 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .ud{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .u-high{background:var(--uh);}.u-mid{background:var(--um);}.u-low{background:var(--ul);}
 .tb{flex:1;min-width:0;}
-.tt{font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tt{font-size:15px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .tm{display:flex;gap:5px;margin-top:3px;align-items:center;flex-wrap:wrap;}
-.tc{font-size:9px;padding:2px 6px;border-radius:20px;font-weight:500;}
+.tc{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:500;}
 .cat-marketing{background:var(--mk-b);color:var(--mk);font-weight:600;}
 .cat-store{background:var(--st-b);color:var(--st);font-weight:600;}
 .cat-finance{background:var(--fi-b);color:var(--fi);font-weight:600;}
 .cat-ops{background:var(--op-b);color:var(--op);font-weight:600;}
-.td{font-size:10px;color:var(--text3);}
+.td{font-size:11px;color:var(--text3);}
 .td.ov{color:var(--uh);font-weight:500;}
-.ei{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:9px;margin-bottom:4px;cursor:pointer;border:1px solid var(--border);background:var(--accent-s);transition:all .15s;}
+.ei{display:flex;align-items:center;gap:9px;padding:10px 13px;border-radius:9px;margin-bottom:4px;cursor:pointer;border:1px solid var(--border);background:var(--accent-s);transition:all .15s;}
 .ei:hover{box-shadow:var(--sh);}
-.et{font-size:11px;color:var(--accent);font-weight:500;min-width:34px;}
+.et{font-size:13px;color:var(--accent);font-weight:500;min-width:34px;}
 
 /* CALENDAR */
 .calnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
@@ -109,14 +139,14 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .calbtn{width:28px;height:28px;background:var(--bg2);border:1px solid var(--border);border-radius:7px;cursor:pointer;font-size:13px;color:var(--text2);display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .calbtn:hover{color:var(--accent);border-color:var(--accent);}
 .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
-.calwd{text-align:center;font-size:9px;color:var(--text3);padding:4px 0;letter-spacing:1px;text-transform:uppercase;}
+.calwd{text-align:center;font-size:10px;color:var(--text3);padding:4px 0;letter-spacing:1px;text-transform:uppercase;}
 .calday{min-height:88px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px;cursor:pointer;transition:all .15s;}
 .calday:hover{border-color:var(--border2);box-shadow:var(--sh);}
 .calday.today{border-color:var(--accent);background:var(--accent-s);box-shadow:0 0 0 2px var(--accent-s);}
 .calday.om{opacity:.25;}
-.calnum{font-size:13px;color:var(--text2);margin-bottom:4px;font-weight:500;}
+.calnum{font-size:14px;color:var(--text2);margin-bottom:4px;font-weight:500;}
 .calday.today .calnum{color:var(--accent);}
-.calev{font-size:10px;padding:2px 5px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.calev{font-size:11px;padding:2px 5px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .calev.marketing{background:var(--mk-b);color:var(--mk);}
 .calev.store{background:var(--st-b);color:var(--st);}
 .calev.finance{background:var(--fi-b);color:var(--fi);}
@@ -129,7 +159,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .fbtn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
 
 /* DONE TOGGLE */
-.dtog{display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 0;color:var(--text3);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;user-select:none;}
+.dtog{display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 0;color:var(--text3);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;user-select:none;}
 .dtog:hover{color:var(--text2);}
 .arr{transition:transform .2s;display:inline-block;}
 .arr.open{transform:rotate(90deg);}
@@ -200,8 +230,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .mo.open .md{transform:translateY(0);}
 .md-title{font-family:'DM Serif Display',serif;font-size:19px;margin-bottom:16px;}
 .fg{margin-bottom:12px;}
-.fl{font-size:9px;letter-spacing:1.5px;color:var(--text3);text-transform:uppercase;margin-bottom:5px;display:block;}
-.fi{width:100%;background:var(--bg2);border:1.5px solid var(--border);border-radius:7px;padding:8px 10px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;}
+.fl{font-size:10px;letter-spacing:1.5px;color:var(--text3);text-transform:uppercase;margin-bottom:5px;display:block;}
+.fi{width:100%;background:var(--bg2);border:1.5px solid var(--border);border-radius:7px;padding:9px 11px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;}
 .fi:focus{border-color:var(--accent);}
 .fi::placeholder{color:var(--text3);}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
@@ -212,7 +242,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .hidden{display:none!important;}
 
 /* TOAST */
-.toast{position:fixed;bottom:18px;right:18px;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:10px 15px;font-size:12px;color:var(--text);z-index:200;box-shadow:var(--sh2);transform:translateY(8px);opacity:0;transition:all .25s;pointer-events:none;}
+.toast{position:fixed;bottom:18px;right:18px;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:11px 16px;font-size:13px;color:var(--text);z-index:200;box-shadow:var(--sh2);transform:translateY(8px);opacity:0;transition:all .25s;pointer-events:none;}
 .toast.show{transform:translateY(0);opacity:1;}
 
 ::-webkit-scrollbar{width:3px;}
@@ -228,8 +258,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .note-author.V{background:#ffe0ee;color:#e8507a;}
 .note-author.yu{background:#e0f0ff;color:#3a88d4;}
 .note-date{font-size:10px;color:var(--text3);margin-left:auto;}
-.note-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.note-preview{font-size:12px;color:var(--text2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.note-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.note-preview{font-size:13px;color:var(--text2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .note-actions{display:flex;gap:6px;margin-top:10px;}
 .note-tag{font-size:10px;color:var(--text3);}
 
@@ -472,6 +502,9 @@ let noteEditAuthor=localStorage.getItem('vvNoteAuthor')||'V';
 let noteEditTitle='';
 let noteEditBody='';
 let noteEditBg='';
+let countdowns=JSON.parse(localStorage.getItem('vvCountdowns')||'[]');
+let weatherCache=null;
+let weatherLoading=false;
 
 // ── THEME ──
 let dark=localStorage.getItem('vvTheme')==='dark';
@@ -493,15 +526,30 @@ try {
     const r=snap.docs.map(d2=>({id:d2.id,...d2.data()}));
     if(r.length>0) events=r; if(page==='today'||page==='calendar') render();
   },()=>{});
-  onSnapshot(query(collection(db,'director_stickies'),orderBy('createdAt','asc')),snap=>{
-    snap.docChanges().forEach(ch=>{
-      const s={fbKey:ch.doc.id,...ch.doc.data()};
-      if(ch.type==='added'){ if(!stickies.find(x=>x.fbKey===s.fbKey)){ stickies.push(s); renderStickyEl(s); } }
-      else if(ch.type==='removed'){ stickies=stickies.filter(x=>x.fbKey!==s.fbKey); const el=$('s-'+s.fbKey); if(el)el.remove(); }
+  onSnapshot(query(collection(db,'director_stickies'),orderBy('createdAt','asc')),function(snap){
+    snap.docChanges().forEach(function(ch){
+      const s = Object.assign({fbKey: ch.doc.id}, ch.doc.data());
+      if(ch.type==='added'){
+        // 找看看有沒有 local 暫存的對應（用 text+time 比對），有的話替換
+        const localIdx = stickies.findIndex(x => x.fbKey.startsWith('local-') && x.text===s.text && x.time===s.time);
+        if(localIdx >= 0){
+          const oldKey = stickies[localIdx].fbKey;
+          stickies[localIdx].fbKey = s.fbKey;
+          const oldEl = document.getElementById('s-' + oldKey);
+          if(oldEl){ oldEl.id = 's-' + s.fbKey; const btn = oldEl.querySelector('.st-close'); if(btn) btn.dataset.fbkey = s.fbKey; }
+        } else if(!stickies.find(x => x.fbKey===s.fbKey)){
+          stickies.push(s);
+          renderStickyEl(s);
+        }
+      } else if(ch.type==='removed'){
+        stickies = stickies.filter(x => x.fbKey !== s.fbKey);
+        const el = document.getElementById('s-' + s.fbKey);
+        if(el) el.remove();
+      }
     });
     updateStickyCount();
     if(page==='stickies') render();
-  },()=>{});
+  },function(){});
   onSnapshot(query(collection(db,'director_notes'),orderBy('createdAt','desc')),snap=>{
     notes=snap.docs.map(d2=>({id:d2.id,...d2.data()}));
     if(page==='notes') render();
@@ -553,18 +601,73 @@ function rToday(){
   const lo=act.filter(t=>t.urgency==='low');
   const done=tasks.filter(t=>t.done&&t.doneAt&&t.doneAt.startsWith(tday));
 
+  // ── 本週進度 ──
+  const weekStart=new Date(now); weekStart.setDate(now.getDate()-now.getDay()+1); weekStart.setHours(0,0,0,0);
+  const weekDone=tasks.filter(t=>t.done&&t.doneAt&&new Date(t.doneAt)>=weekStart).length;
+  const weekTotal=tasks.filter(t=>new Date(t.createdAt||0)>=weekStart||!t.done).length;
+  const pct=weekTotal>0?Math.round(weekDone/weekTotal*100):0;
+  const circumference=2*Math.PI*18;
+  const dash=circumference*(pct/100);
+
+  // ── 天氣 ──
+  let weatherHtml='';
+  if(weatherCache){
+    weatherHtml='<div class="weather-icon">'+weatherCache.icon+'</div>'
+      +'<div class="widget-val" style="font-size:26px">'+weatherCache.temp+'°</div>'
+      +'<div class="widget-sub">'+weatherCache.desc+'　台北</div>';
+  } else {
+    weatherHtml='<div style="font-size:13px;color:var(--text3)">⟳ 載入天氣...</div>';
+    if(!weatherLoading){ weatherLoading=true; fetchWeather(); }
+  }
+
+  // ── 倒數計時 ──
+  let cdHtml='<div class="countdown-bar">';
+  countdowns.forEach((cd,i)=>{
+    const diff=Math.ceil((new Date(cd.date)-new Date())/(1000*60*60*24));
+    const color=diff<=3?'var(--uh)':diff<=7?'var(--um)':'var(--accent)';
+    cdHtml+='<div class="cd-card">'
+      +'<div><div class="cd-days" style="color:'+color+'">'+Math.max(0,diff)+'</div><div style="font-size:10px;color:var(--text3)">天</div></div>'
+      +'<div><div class="cd-label">'+cd.label+'</div><div style="font-size:10px;color:var(--text3)">'+cd.date+'</div></div>'
+      +'<button class="cd-del" data-cd-del="'+i+'">×</button>'
+      +'</div>';
+  });
+  cdHtml+='<button class="cd-add" data-action="cd-add">＋ 新增倒數</button></div>';
+
+  // ── 快速新增 ──
+  const catOpts=cats.map(c=>'<option value="'+c.id+'">'+c.name+'</option>').join('');
+  const quickAdd='<div class="quick-add">'
+    +'<input class="quick-input" id="quickInput" placeholder="快速新增任務... 按 Enter 送出"/>'
+    +'<select class="quick-cat" id="quickCat">'+catOpts+'</select>'
+    +'<select class="quick-cat" id="quickUrgency" style="width:auto">'
+    +'<option value="high">🔴</option><option value="mid" selected>🟡</option><option value="low">⚪</option>'
+    +'</select></div>';
+
+  // ── 左欄 ──
   let L='<div class="sc">'
     +'<div class="thl">'+MN[now.getMonth()]+'月 '+now.getDate()+'日</div>'
     +'<div class="tsub">週'+WD[now.getDay()]+'　'+now.getFullYear()+'</div>';
+
+  L+='<div class="today-widgets">'
+    +'<div class="widget"><div class="widget-label">天氣</div>'+weatherHtml+'</div>'
+    +'<div class="widget"><div class="widget-label">本週進度</div>'
+    +'<div class="progress-ring">'
+    +'<div class="ring-wrap"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="none" stroke="var(--border)" stroke-width="4"/><circle cx="24" cy="24" r="18" fill="none" stroke="var(--accent)" stroke-width="4" stroke-dasharray="'+dash+' '+circumference+'" stroke-linecap="round"/></svg><div class="ring-center">'+pct+'%</div></div>'
+    +'<div><div class="widget-val" style="font-size:18px">'+weekDone+' / '+weekTotal+'</div><div class="widget-sub">本週完成 / 全部</div></div>'
+    +'</div></div>'
+    +'</div>';
+
+  L+=cdHtml;
+  L+=quickAdd;
+
   if(todayEvs.length){
-    L+='<div class="ug"><div class="ul"><span style="color:var(--accent)">行程</span><div class="uln"></div></div>';
+    L+='<div class="ug"><div class="ul"><span style="color:var(--accent)">📅 今日行程</span><div class="uln"></div></div>';
     todayEvs.forEach(ev=>{ L+='<div class="ei" data-id="'+ev.id+'" data-type="ev"><div class="et">'+(ev.time||'')+'</div><div class="tb"><div class="tt">'+ev.title+'</div><div class="tm"><span class="tc cat-'+ev.cat+'">'+getCatName(ev.cat)+'</span>'+(ev.note?'<span class="td">'+ev.note+'</span>':'')+'</div></div></div>'; });
     L+='</div>';
   }
   if(hi.length){ L+='<div class="ug"><div class="ul"><span style="color:var(--uh)">● 緊急</span><div class="uln"></div></div>'; hi.forEach(t=>{L+=tHTML(t);}); L+='</div>'; }
   if(mi.length){ L+='<div class="ug"><div class="ul"><span style="color:var(--um)">● 一般</span><div class="uln"></div></div>'; mi.forEach(t=>{L+=tHTML(t);}); L+='</div>'; }
   if(lo.length){ L+='<div class="ug"><div class="ul"><span style="color:var(--ul)">● 低優先</span><div class="uln"></div></div>'; lo.forEach(t=>{L+=tHTML(t);}); L+='</div>'; }
-  if(!act.length&&!todayEvs.length) L+='<div class="empty">✦ 今天沒有待辦</div>';
+  if(!act.length&&!todayEvs.length) L+='<div class="empty" style="padding:16px 0">✦ 今天沒有待辦</div>';
   if(done.length){
     L+='<div class="dtog" data-action="tdone"><span class="arr'+(doneOpen?' open':'')+'">▶</span>今日已完成 ('+done.length+')</div>';
     if(doneOpen) done.forEach(t=>{L+=tHTML(t);});
@@ -572,9 +675,33 @@ function rToday(){
   L+='</div>';
 
   const R=rCal(true);
-
   return '<div class="hsplit"><div class="scol">'+L+'</div><div class="scol">'+R+'</div></div>';
 }
+
+async function fetchWeather(){
+  try{
+    const r=await fetch('https://wttr.in/Taipei?format=j1');
+    const d=await r.json();
+    const cur=d.current_condition[0];
+    const temp=cur.temp_C;
+    const desc=cur.weatherDesc[0].value;
+    const code=parseInt(cur.weatherCode);
+    let icon='🌤';
+    if(code===113) icon='☀️';
+    else if(code<=116) icon='⛅';
+    else if(code<=122) icon='☁️';
+    else if(code<=200) icon='🌫';
+    else if(code<=284) icon='🌧';
+    else if(code<=314) icon='🌨';
+    else if(code<=377) icon='❄️';
+    else if(code<=386) icon='⛈';
+    else icon='🌈';
+    weatherCache={temp,desc,icon};
+    weatherLoading=false;
+    if(page==='today') render();
+  } catch(e){ weatherCache={temp:'--',desc:'無法取得',icon:'🌐'}; weatherLoading=false; if(page==='today') render(); }
+}
+
 
 // ── CALENDAR ──
 function rCal(inline){
@@ -794,119 +921,180 @@ function rSettings(){
 }
 
 // ── STICKY FLOAT ──
-const SNAP_X=28;
-function getStickyBottomY(idx, elH){
-  // anchor from bottom of viewport, stack upward
-  const panelH = 90; // height of sticky-panel bar
-  const gap = 12;
-  const cardH = elH || 130;
-  return window.innerHeight - panelH - (idx+1)*(cardH+gap);
-}
-function buildColorRow(){
-  const el=$('colorRow'); if(!el) return;
-  el.innerHTML=SC_HEX.map((c,i)=>'<div class="scb'+(i===selSC?' sel':'')+'" data-si="'+i+'" style="background:'+c+'"></div>').join('');
-}
-document.addEventListener('click',e=>{
-  const sb=e.target.closest('.scb');
-  if(sb&&sb.dataset.si!==undefined){ selSC=parseInt(sb.dataset.si); buildColorRow(); }
-});
+// ── STICKY ENGINE (仿 PM 工具浮動層) ──
+const STICKY_PANEL_H = 96; // sticky-panel 高度
+const STICKY_W = 200;
+const STICKY_GAP = 12;
+const STICKY_START_X = 24;
 
-$('sfabNew').addEventListener('click',()=>{ $('stickyInbox').classList.remove('open'); $('stickyCompose').classList.toggle('open'); });
-$('sfabList').addEventListener('click',()=>{ $('stickyCompose').classList.remove('open'); $('stickyInbox').classList.toggle('open'); renderInbox(); });
-$('sfabAlign').addEventListener('click',realignStickies);
-$('spostBtn').addEventListener('click',postSticky);
+window.stickyUserMoved = {};
+window._stickyDrag = false;
 
-async function postSticky(){
-  const text=$('stickyText').value.trim(); if(!text) return;
-  const s={text,color:SC_CLASSES[selSC],time:new Date().toLocaleString('zh-TW'),createdAt:Date.now(),x:null,y:null};
-  try{ const ref=await addDoc(collection(db,'director_stickies'),s); }
-  catch(e){ stickies.push({fbKey:'local-'+Date.now(),...s}); renderStickyEl({fbKey:'local-'+Date.now(),...s}); updateStickyCount(); }
-  $('stickyText').value='';
-  $('stickyCompose').classList.remove('open');
-  showToast('便利貼已貼上');
+function getStickyPos(idx){
+  // 從左下角往右橫向排列
+  const x = STICKY_START_X + idx * (STICKY_W + STICKY_GAP);
+  const y = window.innerHeight - STICKY_PANEL_H - STICKY_GAP - 140;
+  return { x: Math.max(0, x), y: Math.max(60, y) };
 }
 
 function renderStickyEl(s){
-  if($('s-'+s.fbKey)) return;
-  const el=document.createElement('div');
-  el.className='sticky '+s.color; el.id='s-'+s.fbKey;
-  const idx=stickyRenderIdx++;
-  const userPos=stickyUserMoved[s.fbKey];
-  el.style.left=(userPos&&s.x!=null?s.x:(SNAP_X))+'px';
-  el.style.top=(userPos&&s.y!=null?s.y:(HEAD_H+idx*195))+'px';
-  el.style.zIndex=51;
-  el.innerHTML='<div class="sth"><span class="st-date">'+( s.time||'')+'</span><button class="st-close" data-fbkey="'+s.fbKey+'">×</button></div>'
-    +'<div class="st-body">'+( s.text||'').split('\n').join('<br>')+'</div>';
-  el.querySelector('.st-close').addEventListener('click',()=>hideSticky(s.fbKey));
-  makeDraggable(el,s);
-  $('stickyLayer').appendChild(el);
-  clearTimeout(window._sReposTimer);
-  window._sReposTimer=setTimeout(repositionStickies,60);
+  if(document.getElementById('s-'+s.fbKey)) return;
+  const layer = document.getElementById('stickyLayer');
+  if(!layer) return;
+
+  const el = document.createElement('div');
+  el.className = 'sticky ' + (s.color||'sy-s');
+  el.id = 's-' + s.fbKey;
+
+  const userMoved = (window.stickyUserMoved||{})[s.fbKey];
+  const idx = stickies.indexOf(s) >= 0 ? stickies.indexOf(s) : stickies.length - 1;
+  const pos = getStickyPos(idx);
+
+  el.style.left = (userMoved && s.x != null ? s.x : pos.x) + 'px';
+  el.style.top  = (userMoved && s.y != null ? s.y : pos.y) + 'px';
+  el.style.zIndex = '51';
+  el.style.position = 'absolute';
+
+  el.innerHTML =
+    '<div class="sth">'
+    + '<span class="st-date">' + (s.time||'') + '</span>'
+    + '<button class="st-close" data-fbkey="' + s.fbKey + '">×</button>'
+    + '</div>'
+    + '<div class="st-body">' + (s.text||'').split('\n').join('<br>') + '</div>';
+
+  el.querySelector('.st-close').addEventListener('click', function(){ hideSticky(s.fbKey); });
+  makeDraggable(el, s);
+  layer.appendChild(el);
 }
 
 function repositionStickies(){
-  const items=[...stickies].sort((a,b)=>a.createdAt-b.createdAt);
-  const panelH=90, gap=12;
-  let bottomY=window.innerHeight - panelH - gap;
-  // stack from bottom upward
-  for(let i=items.length-1;i>=0;i--){
-    const s=items[i];
-    const el=$('s-'+s.fbKey); if(!el) return;
-    if(stickyUserMoved[s.fbKey]) continue;
-    const h=el.offsetHeight||130;
-    el.style.left=SNAP_X+'px';
-    el.style.top=Math.max(60, bottomY-h)+'px';
-    bottomY=bottomY-h-gap;
-  }
+  const items = [...stickies].sort((a,b) => a.createdAt - b.createdAt);
+  items.forEach(function(s, idx){
+    const el = document.getElementById('s-' + s.fbKey);
+    if(!el) return;
+    if((window.stickyUserMoved||{})[s.fbKey]) return;
+    const pos = getStickyPos(idx);
+    el.style.left = pos.x + 'px';
+    el.style.top  = pos.y + 'px';
+  });
 }
 
 function realignStickies(){
-  stickyUserMoved={};
-  const items=[...stickies].sort((a,b)=>a.createdAt-b.createdAt);
-  const panelH=90, gap=12;
-  let bottomY=window.innerHeight - panelH - gap;
-  for(let i=items.length-1;i>=0;i--){
-    const s=items[i];
-    const el=$('s-'+s.fbKey); if(!el) continue;
-    const h=el.offsetHeight||130;
-    el.style.transition='left .4s cubic-bezier(.4,0,.2,1),top .4s cubic-bezier(.4,0,.2,1)';
-    el.style.left=SNAP_X+'px';
-    el.style.top=Math.max(60, bottomY-h)+'px';
-    bottomY=bottomY-h-gap;
-    setTimeout(()=>{ el.style.transition=''; },450);
-  }
+  window.stickyUserMoved = {};
+  const items = [...stickies].sort((a,b) => a.createdAt - b.createdAt);
+  items.forEach(function(s, idx){
+    const el = document.getElementById('s-' + s.fbKey);
+    if(!el) return;
+    const pos = getStickyPos(idx);
+    el.style.transition = 'left .4s cubic-bezier(.4,0,.2,1), top .4s cubic-bezier(.4,0,.2,1)';
+    el.style.left = pos.x + 'px';
+    el.style.top  = pos.y + 'px';
+    setTimeout(function(){ el.style.transition = ''; }, 450);
+  });
   showToast('便利貼已對齊 ✓');
 }
 
 function hideSticky(fbKey){
-  const el=$('s-'+fbKey); if(el) el.remove();
-  stickies=stickies.filter(x=>x.fbKey!==fbKey);
-  if(!fbKey.startsWith('local-')) deleteDoc(doc(db,'director_stickies',fbKey)).catch(()=>{});
+  const el = document.getElementById('s-' + fbKey);
+  if(el) el.remove();
+  stickies = stickies.filter(function(x){ return x.fbKey !== fbKey; });
+  if(fbKey && !fbKey.startsWith('local-')){
+    deleteDoc(doc(db, 'director_stickies', fbKey)).catch(function(){});
+  }
   updateStickyCount();
-  if(page==='stickies') render();
+  if(page === 'stickies') render();
 }
 
-function updateStickyCount(){ $('stickyCount').textContent=stickies.length; }
+function updateStickyCount(){
+  const el = document.getElementById('stickyCount');
+  if(el) el.textContent = stickies.length;
+}
 
 function renderInbox(){
-  const list=$('inboxList'); if(!list) return;
-  if(!stickies.length){ list.innerHTML='<div class="sib-empty">還沒有便利貼</div>'; return; }
-  const cm={'sy-s':'#fdf3c8','sp-s':'#ffd6e7','sm-s':'#c8f7e4','sl-s':'#e2d9f3','so-s':'#ffe5d0'};
-  list.innerHTML=[...stickies].sort((a,b)=>b.createdAt-a.createdAt).map(s=>'<div class="sib-item" style="background:'+(cm[s.color]||'#fdf3c8')+'">'
-    +'<div style="display:flex;justify-content:space-between"><span style="font-size:10px;opacity:.5">'+( s.time||'')+'</span>'
-    +'<span style="cursor:pointer;opacity:.5;font-size:13px" data-del-sticky="'+s.fbKey+'">🗑</span></div>'
-    +'<div class="sib-t">'+( s.text||'').split('\n').join('<br>')+'</div></div>').join('');
-  list.querySelectorAll('[data-del-sticky]').forEach(el=>{ el.addEventListener('click',()=>hideSticky(el.dataset.delSticky)); });
+  const list = document.getElementById('inboxList');
+  if(!list) return;
+  if(!stickies.length){ list.innerHTML = '<div class="sib-empty">還沒有便利貼</div>'; return; }
+  const cm = {'sy-s':'#fff9e6','sp-s':'#ffe8f0','sm-s':'#e8f8ee','sl-s':'#e0f0ff','so-s':'#fff3e0'};
+  list.innerHTML = [...stickies].sort((a,b) => b.createdAt - a.createdAt).map(function(s){
+    return '<div class="sib-item" style="background:'+(cm[s.color]||'#fff9e6')+'">'
+      + '<div style="display:flex;justify-content:space-between;align-items:center">'
+      + '<span style="font-size:10px;color:var(--text3)">' + (s.time||'') + '</span>'
+      + '<span style="cursor:pointer;font-size:13px;opacity:.5" data-del-sticky="' + s.fbKey + '">🗑</span>'
+      + '</div>'
+      + '<div class="sib-t">' + (s.text||'').split('\n').join('<br>') + '</div>'
+      + '</div>';
+  }).join('');
+  list.querySelectorAll('[data-del-sticky]').forEach(function(el){
+    el.addEventListener('click', function(){ hideSticky(el.dataset.delSticky); });
+  });
 }
 
-function makeDraggable(el,s){
-  let ox,oy,drag=false;
-  el.addEventListener('mousedown',e=>{ if(e.target.classList.contains('st-close'))return; drag=true; _stickyDragged=false; ox=e.clientX-el.offsetLeft; oy=e.clientY-el.offsetTop; el.style.zIndex=99; e.preventDefault(); });
-  document.addEventListener('mousemove',e=>{ if(!drag)return; _stickyDragged=true; el.style.left=Math.max(0,e.clientX-ox)+'px'; el.style.top=Math.max(0,e.clientY-oy)+'px'; s.x=e.clientX-ox; s.y=e.clientY-oy; });
-  document.addEventListener('mouseup',()=>{ if(!drag)return; drag=false; el.style.zIndex=51; if(_stickyDragged){ stickyUserMoved[s.fbKey]=true; } });
-  el.addEventListener('touchstart',e=>{ if(e.target.classList.contains('st-close'))return; drag=true; ox=e.touches[0].clientX-el.offsetLeft; oy=e.touches[0].clientY-el.offsetTop; },{passive:true});
-  el.addEventListener('touchmove',e=>{ if(!drag)return; el.style.left=Math.max(0,e.touches[0].clientX-ox)+'px'; el.style.top=Math.max(0,e.touches[0].clientY-oy)+'px'; e.preventDefault(); },{passive:false});
-  el.addEventListener('touchend',()=>{ drag=false; });
+async function postSticky(){
+  const text = document.getElementById('stickyText').value.trim();
+  if(!text) return;
+  const fbKey = 'local-' + Date.now();
+  const s = {
+    fbKey: fbKey,
+    text: text,
+    color: SC_CLASSES[selSC],
+    time: new Date().toLocaleString('zh-TW'),
+    createdAt: Date.now(),
+    x: null,
+    y: null
+  };
+  // 立刻顯示（不等 Firebase）
+  stickies.push(s);
+  renderStickyEl(s);
+  updateStickyCount();
+  document.getElementById('stickyText').value = '';
+  document.getElementById('stickyCompose').classList.remove('open');
+  showToast('便利貼已貼上 🗒');
+  // 背景同步 Firebase
+  try{
+    const ref = await addDoc(collection(db,'director_stickies'), {
+      text: s.text, color: s.color, time: s.time, createdAt: s.createdAt, x: null, y: null
+    });
+    // 更新 fbKey
+    const idx = stickies.indexOf(s);
+    if(idx >= 0){ stickies[idx].fbKey = ref.id; }
+    const el = document.getElementById('s-' + fbKey);
+    if(el){ el.id = 's-' + ref.id; el.querySelector('.st-close').dataset.fbkey = ref.id; }
+  } catch(e){}
+}
+
+function makeDraggable(el, s){
+  let ox, oy, drag = false;
+  el.addEventListener('mousedown', function(e){
+    if(e.target.classList.contains('st-close')) return;
+    drag = true; window._stickyDrag = false;
+    ox = e.clientX - el.offsetLeft; oy = e.clientY - el.offsetTop;
+    el.style.zIndex = '99'; e.preventDefault();
+  });
+  document.addEventListener('mousemove', function(e){
+    if(!drag) return;
+    window._stickyDrag = true;
+    el.style.left = Math.max(0, e.clientX - ox) + 'px';
+    el.style.top  = Math.max(0, e.clientY - oy) + 'px';
+    s.x = e.clientX - ox; s.y = e.clientY - oy;
+  });
+  document.addEventListener('mouseup', function(){
+    if(!drag) return; drag = false; el.style.zIndex = '51';
+    if(window._stickyDrag){
+      window.stickyUserMoved = window.stickyUserMoved || {};
+      window.stickyUserMoved[s.fbKey] = true;
+    }
+  });
+  el.addEventListener('touchstart', function(e){
+    if(e.target.classList.contains('st-close')) return;
+    drag = true; ox = e.touches[0].clientX - el.offsetLeft; oy = e.touches[0].clientY - el.offsetTop;
+  },{passive:true});
+  el.addEventListener('touchmove', function(e){
+    if(!drag) return;
+    el.style.left = Math.max(0, e.touches[0].clientX - ox) + 'px';
+    el.style.top  = Math.max(0, e.touches[0].clientY - oy) + 'px';
+    e.preventDefault();
+  },{passive:false});
+  el.addEventListener('touchend', function(){ drag = false; });
 }
 
 // ── BIND ──
@@ -923,6 +1111,36 @@ function bind(){
   document.querySelectorAll('[data-action="realign"]').forEach(el=>{ el.addEventListener('click',realignStickies); });
   document.querySelectorAll('[data-del-sticky-today]').forEach(el=>{
     el.addEventListener('click',ev=>{ ev.stopPropagation(); hideSticky(el.dataset.delStickyToday); });
+  });
+
+  // quick add
+  const qi=$('quickInput');
+  if(qi){
+    qi.addEventListener('keydown',async e=>{
+      if(e.key!=='Enter') return;
+      const title=qi.value.trim(); if(!title) return;
+      const cat=($('quickCat')||{}).value||cats[0].id;
+      const urgency=($('quickUrgency')||{}).value||'mid';
+      const data={title,cat,urgency,due:null,note:null,remind:null,done:false,createdAt:new Date().toISOString()};
+      qi.value=''; qi.placeholder='已新增！'; setTimeout(()=>{ qi.placeholder='快速新增任務... 按 Enter 送出'; },1500);
+      try{ const ref=await addDoc(collection(db,'director_tasks'),data); tasks.unshift({id:ref.id,...data}); }
+      catch{ tasks.unshift({id:'dt'+Date.now(),...data}); }
+      render();
+    });
+  }
+
+  // countdown
+  document.querySelectorAll('[data-cd-del]').forEach(el=>{
+    el.addEventListener('click',ev=>{ ev.stopPropagation(); countdowns.splice(parseInt(el.dataset.cdDel),1); localStorage.setItem('vvCountdowns',JSON.stringify(countdowns)); render(); });
+  });
+  document.querySelectorAll('[data-action="cd-add"]').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const label=prompt('倒數名稱（例如：新品發布）'); if(!label) return;
+      const date=prompt('目標日期（格式：YYYY-MM-DD）'); if(!date||!/\d{4}-\d{2}-\d{2}/.test(date)) return;
+      countdowns.push({label:label.trim(),date});
+      localStorage.setItem('vvCountdowns',JSON.stringify(countdowns));
+      render();
+    });
   });
 
   // notes list

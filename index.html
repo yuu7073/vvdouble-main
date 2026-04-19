@@ -219,6 +219,42 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 
+/* NOTES LIST */
+.notes-list{display:flex;flex-direction:column;gap:10px;}
+.note-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all .15s;position:relative;}
+.note-card:hover{border-color:var(--border2);box-shadow:var(--sh);}
+.note-card-header{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.note-author{font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px;letter-spacing:.5px;}
+.note-author.V{background:#ffe0ee;color:#e8507a;}
+.note-author.yu{background:#e0f0ff;color:#3a88d4;}
+.note-date{font-size:10px;color:var(--text3);margin-left:auto;}
+.note-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.note-preview{font-size:12px;color:var(--text2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.note-actions{display:flex;gap:6px;margin-top:10px;}
+.note-tag{font-size:10px;color:var(--text3);}
+
+/* NOTE EDITOR PAGE */
+.note-edit-wrap{display:flex;flex-direction:column;height:calc(100vh - 120px);}
+.note-edit-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.note-title-input{width:100%;background:transparent;border:none;border-bottom:2px solid var(--border);outline:none;font-size:20px;font-family:'DM Serif Display',serif;color:var(--text);padding:0 0 8px;margin-bottom:14px;font-weight:400;}
+.note-title-input:focus{border-color:var(--accent);}
+.note-title-input::placeholder{color:var(--text3);}
+.note-body{flex:1;width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px 20px;outline:none;font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.8;font-size:var(--nfs,14px);overflow-y:auto;min-height:200px;}
+.note-body:focus{border-color:var(--accent);}
+.note-body::placeholder{color:var(--text3);}
+.note-body[data-placeholder]:empty::before{content:attr(data-placeholder);color:var(--text3);pointer-events:none;}
+.note-body h2{font-size:1.3em;font-family:'DM Serif Display',serif;margin:8px 0 4px;}
+.note-body h3{font-size:1.1em;font-weight:600;margin:6px 0 3px;}
+.note-body hr{border:none;border-top:1.5px solid var(--border2);margin:10px 0;}
+.note-body ul,.note-body ol{padding-left:20px;margin:4px 0;}
+.note-body img{max-width:100%;border-radius:8px;margin:6px 0;}
+.author-select{display:flex;gap:6px;align-items:center;}
+.author-chip{padding:5px 14px;border-radius:20px;font-size:12px;cursor:pointer;border:1.5px solid var(--border);background:transparent;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .15s;color:var(--text2);}
+.author-chip.active-V{background:#ffe0ee;border-color:#e8507a;color:#e8507a;}
+.author-chip.active-yu{background:#e0f0ff;border-color:#3a88d4;color:#3a88d4;}
+.fsize-btn{width:28px;height:28px;border:1.5px solid var(--border);border-radius:6px;background:transparent;color:var(--text2);cursor:pointer;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;}
+.fsize-btn:hover{border-color:var(--accent);color:var(--accent);}
+
 /* MOBILE */
 .bnav{display:none;}.fab{display:none;}.fabm{display:none;}
 @media(max-width:768px){
@@ -430,7 +466,12 @@ let selSC=0;
 let page='today', filter='all', calM=new Date().getMonth(), calY=new Date().getFullYear();
 let editTId=null, editEvId=null, doneOpen=false;
 let noteFontSize=parseInt(localStorage.getItem('vvNoteFontSize')||'14');
-let noteContent=localStorage.getItem('vvNoteContent')||'';
+let notes=[]; // loaded from Firebase
+let noteEditing=null; // null=list, id=editing existing, 'new'=new note
+let noteEditAuthor=localStorage.getItem('vvNoteAuthor')||'V';
+let noteEditTitle='';
+let noteEditBody='';
+let noteEditBg='';
 
 // ── THEME ──
 let dark=localStorage.getItem('vvTheme')==='dark';
@@ -460,6 +501,10 @@ try {
     });
     updateStickyCount();
     if(page==='stickies') render();
+  },()=>{});
+  onSnapshot(query(collection(db,'director_notes'),orderBy('createdAt','desc')),snap=>{
+    notes=snap.docs.map(d2=>({id:d2.id,...d2.data()}));
+    if(page==='notes') render();
   },()=>{});
 } catch(e){ setSS(false); }
 
@@ -526,22 +571,7 @@ function rToday(){
   }
   L+='</div>';
 
-  const cm2={'sy-s':'var(--sy)','sp-s':'var(--sp)','sm-s':'var(--sm)','sl-s':'var(--sl)','so-s':'var(--so)'};
-  let stickyCards='';
-  if(!stickies.length){
-    stickyCards='<div style="font-size:12px;color:var(--text3);padding:8px 0">點左下角「🗒 新增便利貼」開始</div>';
-  } else {
-    const sorted2=[...stickies].sort((a,b)=>b.createdAt-a.createdAt).slice(0,4);
-    stickyCards='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
-      +sorted2.map(s=>'<div style="background:'+(cm2[s.color]||'var(--sy)')+';border-radius:9px;padding:9px 10px;position:relative;min-height:64px">'
-        +'<button style="position:absolute;top:5px;right:7px;background:none;border:none;font-size:12px;opacity:.4;cursor:pointer;line-height:1" data-del-sticky-today="'+s.fbKey+'">×</button>'
-        +'<div style="font-size:11px;line-height:1.5;word-break:break-word;padding-right:14px">'+( s.text||'').replace(/
-/g,'<br>').substring(0,60)+(s.text&&s.text.length>60?'...':'')+'</div>'
-        +'</div>').join('')
-      +'</div>'
-      +(stickies.length>4?'<div style="font-size:10px;color:var(--text3);margin-top:6px">還有 '+(stickies.length-4)+' 張...</div>':'');
-  }
-  const R=rCal(true)+'<div class="sc"><div class="sc-t">便利貼 <button class="btn bg bs" data-action="open-compose" style="padding:3px 9px;font-size:10px">＋ 新增</button></div>'+stickyCards+'</div>';
+  const R=rCal(true);
 
   return '<div class="hsplit"><div class="scol">'+L+'</div><div class="scol">'+R+'</div></div>';
 }
@@ -627,7 +657,7 @@ function rStickiesPage(){
   sorted.forEach(s=>{
     const bg=cm[s.color]||'#fdf3c8';
     const dt=s.time?s.time:'';
-    h+='<div class="spg-card" style="background:'+bg+'"><div class="spg-card-t">'+( s.text||'').replace(/\n/g,'<br>')+'</div><div class="spg-card-d">'+dt+'</div></div>';
+    h+='<div class="spg-card" style="background:'+bg+'"><div class="spg-card-t">'+( s.text||'').split('\n').join('<br>')+'</div><div class="spg-card-d">'+dt+'</div></div>';
   });
   h+='</div>';
   return h;
@@ -635,17 +665,114 @@ function rStickiesPage(){
 
 // ── NOTES ──
 function rNotes(){
-  return '<div class="notes-toolbar">'
-    +'<button class="fsize-btn" data-action="note-smaller">A−</button>'
-    +'<span style="font-size:12px;color:var(--text3);min-width:30px;text-align:center">'+noteFontSize+'px</span>'
-    +'<button class="fsize-btn" data-action="note-larger">A+</button>'
+  if(noteEditing){ return rNoteEditor(); }
+  return rNoteList();
+}
+
+function rNoteList(){
+  const authorColors={'V':'#e8507a','昱':'#3a88d4'};
+  let h='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">'
+    +'<div style="font-size:9px;letter-spacing:2px;color:var(--text3);text-transform:uppercase">筆記 ('+notes.length+')</div>'
+    +'<button class="btn bp bs" data-action="note-new">＋ 新增筆記</button>'
+    +'</div>';
+  if(!notes.length){
+    h+='<div class="empty" style="margin-top:40px">✦ 還沒有筆記，點「＋ 新增筆記」開始</div>';
+    return h;
+  }
+  h+='<div class="notes-list">';
+  notes.forEach(n=>{
+    const dt=new Date(n.createdAt);
+    const dateStr=(dt.getMonth()+1)+'/'+ dt.getDate()+' '+ dt.getHours()+':'+ String(dt.getMinutes()).padStart(2,'0');
+    const authorClass=n.author==='V'?'V':'yu';
+    const preview=(n.body||'').split('\n').join(' ').substring(0,80);
+    const nBg=n.bgColor?'background:'+n.bgColor+';border-color:'+n.bgColor+';':''
+    h+='<div class="note-card" data-note-id="'+n.id+'" style="'+nBg+'">'
+      +'<div class="note-card-header">'
+      +'<span class="note-author '+authorClass+'">'+( n.author||'V')+'</span>'
+      +'<span class="note-date">'+dateStr+'</span>'
+      +'</div>'
+      +(n.title?'<div class="note-title">'+n.title+'</div>':'')
+      +'<div class="note-preview">'+(preview||'（空白筆記）')+'</div>'
+      +'<div class="note-actions">'
+      +'<button class="btn bg bs" data-note-edit="'+n.id+'" style="font-size:10px;padding:4px 10px">✎ 編輯</button>'
+      +'<button class="btn bd bs" data-note-del="'+n.id+'" style="font-size:10px;padding:4px 10px">刪除</button>'
+      +'</div>'
+      +'</div>';
+  });
+  h+='</div>';
+  return h;
+}
+
+function rNoteEditor(){
+  const n=noteEditing!=='new'?notes.find(x=>x.id===noteEditing):null;
+  const title=n?n.title:(noteEditTitle||'');
+  const body=n?n.body:(noteEditBody||'');
+  const author=n?n.author:noteEditAuthor;
+  const bg=n?(n.bgColor||noteEditBg):noteEditBg;
+
+  const NOTE_COLORS=[
+    {val:'',label:'預設',style:'background:var(--surface);border:1.5px solid var(--border)'},
+    {val:'#fff9e6',label:'黃',style:'background:#fff9e6;border:1.5px solid #f5c800'},
+    {val:'#ffe8f0',label:'粉',style:'background:#ffe8f0;border:1.5px solid #e8507a'},
+    {val:'#e8f8ee',label:'綠',style:'background:#e8f8ee;border:1.5px solid #4caf7d'},
+    {val:'#e8f0ff',label:'藍',style:'background:#e8f0ff;border:1.5px solid #4a8fd4'},
+    {val:'#f3e8ff',label:'紫',style:'background:#f3e8ff;border:1.5px solid #9b7fe0'},
+  ];
+  const colorBtns=NOTE_COLORS.map(c=>'<button title="'+c.label+'" data-note-bg="'+c.val+'" style="width:20px;height:20px;border-radius:50%;cursor:pointer;flex-shrink:0;'+ c.style+(bg===c.val?';box-shadow:0 0 0 2px var(--text)':'')+'"></button>').join('');
+
+  const noteStyle=bg?'background:'+bg+';':'';
+
+  return '<div class="note-edit-wrap">'
+    // Row 1: back + author + save
+    +'<div class="note-edit-toolbar" style="margin-bottom:8px">'
+    +'<button class="btn bg bs" data-action="note-back">← 返回</button>'
     +'<div style="width:1px;height:20px;background:var(--border);margin:0 4px"></div>'
-    +'<button class="note-format-btn" data-action="note-bold"><b>B</b></button>'
-    +'<button class="note-format-btn" data-action="note-italic"><i>I</i></button>'
-    +'<button class="note-format-btn" data-action="note-ul">• 清單</button>'
-    +'<div style="margin-left:auto;font-size:11px;color:var(--text3)" id="noteSavedLbl"></div>'
+    +'<div class="author-select">'
+    +'<span style="font-size:11px;color:var(--text3)">作者：</span>'
+    +'<button class="author-chip'+(author==='V'?' active-V':'')+'" data-author="V">V</button>'
+    +'<button class="author-chip'+(author==='昱'?' active-yu':'')+'" data-author="昱">昱</button>'
     +'</div>'
-    +'<textarea class="note-editor" id="noteEditor" style="font-size:'+noteFontSize+'px" placeholder="在這裡記錄任何事情...">'+noteContent+'</textarea>';
+    +'<div style="margin-left:auto;display:flex;gap:7px;align-items:center">'
+    +'<span style="font-size:11px;color:var(--text3)" id="noteSavedLbl"></span>'
+    +'<button class="btn bp bs" data-action="note-save">儲存</button>'
+    +'</div>'
+    +'</div>'
+    // Row 2: formatting tools
+    +'<div class="note-edit-toolbar" style="background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:7px 10px;margin-bottom:12px;gap:6px;flex-wrap:wrap">'
+    // font size
+    +'<button class="fsize-btn" data-action="note-smaller" title="縮小字體">A−</button>'
+    +'<span style="font-size:11px;color:var(--text3);min-width:26px;text-align:center" id="fsizeLabel">'+noteFontSize+'</span>'
+    +'<button class="fsize-btn" data-action="note-larger" title="放大字體">A+</button>'
+    +'<div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>'
+    // text format
+    +'<button class="fsize-btn" data-action="note-bold" title="粗體"><b>B</b></button>'
+    +'<button class="fsize-btn" data-action="note-italic" title="斜體"><i>I</i></button>'
+    +'<button class="fsize-btn" data-action="note-underline" title="底線" style="text-decoration:underline">U</button>'
+    +'<div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>'
+    // headings
+    +'<button class="fsize-btn" data-action="note-h1" title="大標題" style="font-size:11px;font-weight:700;width:auto;padding:0 7px">H1</button>'
+    +'<button class="fsize-btn" data-action="note-h2" title="小標題" style="font-size:10px;font-weight:700;width:auto;padding:0 7px">H2</button>'
+    +'<div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>'
+    // lists
+    +'<button class="fsize-btn" data-action="note-ul" title="項目清單" style="width:auto;padding:0 7px;font-size:12px">• 清單</button>'
+    +'<button class="fsize-btn" data-action="note-ol" title="編號清單" style="width:auto;padding:0 7px;font-size:12px">1. 清單</button>'
+    +'<button class="fsize-btn" data-action="note-check" title="核取清單" style="width:auto;padding:0 7px;font-size:12px">☐ 核取</button>'
+    +'<div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>'
+    // divider
+    +'<button class="fsize-btn" data-action="note-hr" title="分隔線" style="width:auto;padding:0 7px;font-size:12px">— 分隔</button>'
+    +'<div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>'
+    // image
+    +'<button class="fsize-btn" data-action="note-img" title="插入圖片" style="width:auto;padding:0 7px;font-size:12px">🖼 圖片</button>'
+    +'<input type="file" id="noteImgInput" accept="image/*" style="display:none">'
+    +'<div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>'
+    // background color
+    +'<span style="font-size:10px;color:var(--text3)">底色</span>'
+    +colorBtns
+    +'</div>'
+    // title + body
+    +'<input class="note-title-input" id="noteTitleInput" placeholder="標題（選填）" value="'+title+'"/>'
+    +'<div class="note-body" id="noteBodyInput" contenteditable="true" style="font-size:'+noteFontSize+'px;'+noteStyle+'" data-placeholder="開始寫筆記..."></div>'
+    +'</div>';
 }
 
 // ── SETTINGS ──
@@ -719,7 +846,7 @@ function renderStickyEl(s){
   el.style.top=(userPos&&s.y!=null?s.y:(HEAD_H+idx*195))+'px';
   el.style.zIndex=51;
   el.innerHTML='<div class="sth"><span class="st-date">'+( s.time||'')+'</span><button class="st-close" data-fbkey="'+s.fbKey+'">×</button></div>'
-    +'<div class="st-body">'+( s.text||'').replace(/\n/g,'<br>')+'</div>';
+    +'<div class="st-body">'+( s.text||'').split('\n').join('<br>')+'</div>';
   el.querySelector('.st-close').addEventListener('click',()=>hideSticky(s.fbKey));
   makeDraggable(el,s);
   $('stickyLayer').appendChild(el);
@@ -778,7 +905,7 @@ function renderInbox(){
   list.innerHTML=[...stickies].sort((a,b)=>b.createdAt-a.createdAt).map(s=>'<div class="sib-item" style="background:'+(cm[s.color]||'#fdf3c8')+'">'
     +'<div style="display:flex;justify-content:space-between"><span style="font-size:10px;opacity:.5">'+( s.time||'')+'</span>'
     +'<span style="cursor:pointer;opacity:.5;font-size:13px" data-del-sticky="'+s.fbKey+'">🗑</span></div>'
-    +'<div class="sib-t">'+( s.text||'').replace(/\n/g,'<br>')+'</div></div>').join('');
+    +'<div class="sib-t">'+( s.text||'').split('\n').join('<br>')+'</div></div>').join('');
   list.querySelectorAll('[data-del-sticky]').forEach(el=>{ el.addEventListener('click',()=>hideSticky(el.dataset.delSticky)); });
 }
 
@@ -808,22 +935,77 @@ function bind(){
     el.addEventListener('click',ev=>{ ev.stopPropagation(); hideSticky(el.dataset.delStickyToday); });
   });
 
-  // notes
-  const ne=$('noteEditor');
-  if(ne){
-    ne.addEventListener('input',()=>{
-      noteContent=ne.value;
-      localStorage.setItem('vvNoteContent',noteContent);
-      const lbl=$('noteSavedLbl'); if(lbl) lbl.textContent='已自動儲存';
-      clearTimeout(window._noteSaveTimer);
-      window._noteSaveTimer=setTimeout(()=>{ const l=$('noteSavedLbl'); if(l) l.textContent=''; },2000);
+  // notes list
+  document.querySelectorAll('[data-action="note-new"]').forEach(el=>{ el.addEventListener('click',()=>{ noteEditing='new'; noteEditTitle=''; noteEditBody=''; noteEditBg=''; render(); }); });
+  document.querySelectorAll('[data-note-edit]').forEach(el=>{ el.addEventListener('click',ev=>{ ev.stopPropagation(); noteEditing=el.dataset.noteEdit; const n=notes.find(x=>x.id===noteEditing); noteEditBg=n&&n.bgColor?n.bgColor:''; render(); }); });
+  document.querySelectorAll('[data-note-del]').forEach(el=>{ el.addEventListener('click',ev=>{ ev.stopPropagation(); deleteNote(el.dataset.noteDel); }); });
+  document.querySelectorAll('[data-note-id]').forEach(el=>{ el.addEventListener('click',()=>{ noteEditing=el.dataset.noteId; const n=notes.find(x=>x.id===noteEditing); noteEditBg=n&&n.bgColor?n.bgColor:''; render(); }); });
+
+  // notes editor
+  document.querySelectorAll('[data-action="note-back"]').forEach(el=>{ el.addEventListener('click',()=>{ noteEditing=null; render(); }); });
+  document.querySelectorAll('[data-action="note-save"]').forEach(el=>{ el.addEventListener('click',()=>saveNote()); });
+
+  // author chips
+  document.querySelectorAll('[data-author]').forEach(el=>{
+    el.addEventListener('click',()=>{
+      noteEditAuthor=el.dataset.author;
+      localStorage.setItem('vvNoteAuthor',noteEditAuthor);
+      document.querySelectorAll('[data-author]').forEach(c=>{ c.className='author-chip'; });
+      el.className='author-chip active-'+(el.dataset.author==='V'?'V':'yu');
     });
-  }
-  document.querySelectorAll('[data-action="note-smaller"]').forEach(el=>{ el.addEventListener('click',()=>{ noteFontSize=Math.max(10,noteFontSize-1); localStorage.setItem('vvNoteFontSize',noteFontSize); render(); }); });
-  document.querySelectorAll('[data-action="note-larger"]').forEach(el=>{ el.addEventListener('click',()=>{ noteFontSize=Math.min(22,noteFontSize+1); localStorage.setItem('vvNoteFontSize',noteFontSize); render(); }); });
-  document.querySelectorAll('[data-action="note-bold"]').forEach(el=>{ el.addEventListener('click',()=>{ document.execCommand('bold'); }); });
-  document.querySelectorAll('[data-action="note-italic"]').forEach(el=>{ el.addEventListener('click',()=>{ document.execCommand('italic'); }); });
-  document.querySelectorAll('[data-action="note-ul"]').forEach(el=>{ el.addEventListener('click',()=>{ document.execCommand('insertUnorderedList'); }); });
+  });
+
+  // font size
+  document.querySelectorAll('[data-action="note-smaller"]').forEach(el=>{ el.addEventListener('click',()=>{
+    noteFontSize=Math.max(10,noteFontSize-1); localStorage.setItem('vvNoteFontSize',noteFontSize);
+    const nb=$('noteBodyInput'); if(nb) nb.style.fontSize=noteFontSize+'px';
+    const lbl=$('fsizeLabel'); if(lbl) lbl.textContent=noteFontSize;
+  }); });
+  document.querySelectorAll('[data-action="note-larger"]').forEach(el=>{ el.addEventListener('click',()=>{
+    noteFontSize=Math.min(26,noteFontSize+1); localStorage.setItem('vvNoteFontSize',noteFontSize);
+    const nb=$('noteBodyInput'); if(nb) nb.style.fontSize=noteFontSize+'px';
+    const lbl=$('fsizeLabel'); if(lbl) lbl.textContent=noteFontSize;
+  }); });
+
+  // text format (contenteditable execCommand)
+  document.querySelectorAll('[data-action="note-bold"]').forEach(el=>{ el.addEventListener('click',()=>{ $('noteBodyInput')&&$('noteBodyInput').focus(); document.execCommand('bold'); }); });
+  document.querySelectorAll('[data-action="note-italic"]').forEach(el=>{ el.addEventListener('click',()=>{ $('noteBodyInput')&&$('noteBodyInput').focus(); document.execCommand('italic'); }); });
+  document.querySelectorAll('[data-action="note-underline"]').forEach(el=>{ el.addEventListener('click',()=>{ $('noteBodyInput')&&$('noteBodyInput').focus(); document.execCommand('underline'); }); });
+  document.querySelectorAll('[data-action="note-h1"]').forEach(el=>{ el.addEventListener('click',()=>{ $('noteBodyInput')&&$('noteBodyInput').focus(); document.execCommand('formatBlock','false','h2'); }); });
+  document.querySelectorAll('[data-action="note-h2"]').forEach(el=>{ el.addEventListener('click',()=>{ $('noteBodyInput')&&$('noteBodyInput').focus(); document.execCommand('formatBlock','false','h3'); }); });
+  document.querySelectorAll('[data-action="note-ul"]').forEach(el=>{ el.addEventListener('click',()=>{ $('noteBodyInput')&&$('noteBodyInput').focus(); document.execCommand('insertUnorderedList'); }); });
+  document.querySelectorAll('[data-action="note-ol"]').forEach(el=>{ el.addEventListener('click',()=>{ $('noteBodyInput')&&$('noteBodyInput').focus(); document.execCommand('insertOrderedList'); }); });
+  document.querySelectorAll('[data-action="note-check"]').forEach(el=>{ el.addEventListener('click',()=>{
+    const nb=$('noteBodyInput'); if(!nb) return; nb.focus();
+    document.execCommand('insertHTML','false','<div><input type="checkbox"> <span></span></div>');
+  }); });
+  document.querySelectorAll('[data-action="note-hr"]').forEach(el=>{ el.addEventListener('click',()=>{
+    const nb=$('noteBodyInput'); if(!nb) return; nb.focus();
+    document.execCommand('insertHTML','false','<hr style="border:none;border-top:1.5px solid var(--border2);margin:10px 0">');
+  }); });
+
+  // image insert
+  document.querySelectorAll('[data-action="note-img"]').forEach(el=>{ el.addEventListener('click',()=>{ const inp=$('noteImgInput'); if(inp) inp.click(); }); });
+  const imgInp=$('noteImgInput');
+  if(imgInp){ imgInp.addEventListener('change',()=>{
+    const file=imgInp.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const nb=$('noteBodyInput'); if(!nb) return; nb.focus();
+      document.execCommand('insertHTML','false','<img src="'+e.target.result+'" style="max-width:100%;border-radius:8px;margin:6px 0">');
+    };
+    reader.readAsDataURL(file);
+    imgInp.value='';
+  }); }
+
+  // background color
+  document.querySelectorAll('[data-note-bg]').forEach(el=>{ el.addEventListener('click',()=>{
+    noteEditBg=el.dataset.noteBg;
+    const nb=$('noteBodyInput'); if(nb) nb.style.background=noteEditBg||'';
+    // update selected ring
+    document.querySelectorAll('[data-note-bg]').forEach(b=>{ b.style.boxShadow=''; });
+    el.style.boxShadow='0 0 0 2px var(--text)';
+  }); });
 
   // settings
   document.querySelectorAll('[data-action="save-cats"]').forEach(el=>{ el.addEventListener('click',()=>{
@@ -838,6 +1020,44 @@ function bind(){
   if(stb){ stb.addEventListener('click',()=>{ dark=!dark; localStorage.setItem('vvTheme',dark?'dark':'light'); applyTheme(); render(); }); }
   const ssl=$('settingsSyncStatus');
   if(ssl){ ssl.textContent=$('syncText').textContent; }
+}
+
+// ── NOTE CRUD ──
+async function saveNote(){
+  const titleEl=$('noteTitleInput'), bodyEl=$('noteBodyInput');
+  const title=titleEl?titleEl.value.trim():'';
+  const body=bodyEl?(bodyEl.innerHTML||''):'';
+  const bgColor=noteEditBg||'';
+  if(!body&&!title){ showToast('請輸入筆記內容'); return; }
+  const author=noteEditAuthor;
+
+  if(noteEditing==='new'){
+    const data={title,body,author,bgColor,createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};
+    try{
+      await addDoc(collection(db,'director_notes'),data);
+      // onSnapshot will update notes array automatically
+    }catch{
+      notes.unshift({id:'dn'+Date.now(),...data});
+      render();
+    }
+    showToast('筆記已儲存 ✓');
+  } else {
+    const n=notes.find(x=>x.id===noteEditing);
+    if(n){ n.title=title; n.body=body; n.author=author; n.bgColor=bgColor; n.updatedAt=new Date().toISOString(); }
+    if(noteEditing&&!noteEditing.startsWith('dn')){
+      await updateDoc(doc(db,'director_notes',noteEditing),{title,body,author,bgColor,updatedAt:new Date().toISOString()}).catch(()=>{});
+    }
+    showToast('筆記已更新 ✓');
+  }
+  noteEditing=null; render();
+}
+
+async function deleteNote(id){
+  if(!confirm('確定要刪除這篇筆記？')) return;
+  notes=notes.filter(x=>x.id!==id);
+  if(!id.startsWith('dn')) await deleteDoc(doc(db,'director_notes',id)).catch(()=>{});
+  showToast('筆記已刪除');
+  noteEditing=null; render();
 }
 
 // ── TASK CRUD ──

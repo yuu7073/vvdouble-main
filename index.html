@@ -516,10 +516,11 @@ let stickyRenderIdx=0;
 let selSC=0;
 let page='today', filter='all', calM=new Date().getMonth(), calY=new Date().getFullYear();
 let editTId=null, editEvId=null, doneOpen=false;
+let calDragEvId=null;
+let noteFilter='all';
 let noteFontSize=parseInt(localStorage.getItem('vvNoteFontSize')||'14');
 let notes=[]; // loaded from Firebase
 let noteEditing=null; // null=list, id=editing existing, 'new'=new note
-let noteFilter='all'; // 'all' | 'V' | '昱'
 let noteEditAuthor=localStorage.getItem('vvNoteAuthor')||'V';
 let noteEditTitle='';
 let noteEditBody='';
@@ -760,9 +761,6 @@ function rCal(inline){
   const startOffset=(rawStart===0)?6:rawStart-1;
   const dim=new Date(calY,calM+1,0).getDate();
   const pd=new Date(calY,calM,0).getDate();
-
-  // close any open menu
-  evActionMenu=null;
 
   let h=(inline?'<div class="sc">':'')
     +'<div class="calnav"><div class="calml">'+MN[calM]+' '+calY+'</div>'

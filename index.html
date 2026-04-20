@@ -515,7 +515,35 @@ $('themeBtn').addEventListener('click',()=>{ dark=!dark; localStorage.setItem('v
 // ── FIREBASE ──
 buildCatSelects();
 buildColorRow();
+
+document.addEventListener('click', function(e){
+  const sb = e.target.closest('.scb');
+  if(sb && sb.dataset.si !== undefined){
+    selSC = parseInt(sb.dataset.si);
+    buildColorRow();
+  }
+});
+
 render();
+
+// ── STICKY PANEL BUTTONS（在 render 之後確保 DOM 存在）──
+(function(){
+  var n=document.getElementById('sfabNew');
+  var l=document.getElementById('sfabList');
+  var a=document.getElementById('sfabAlign');
+  var p=document.getElementById('spostBtn');
+  if(n) n.addEventListener('click', function(){
+    document.getElementById('stickyInbox').classList.remove('open');
+    document.getElementById('stickyCompose').classList.toggle('open');
+  });
+  if(l) l.addEventListener('click', function(){
+    document.getElementById('stickyCompose').classList.remove('open');
+    document.getElementById('stickyInbox').classList.toggle('open');
+    renderInbox();
+  });
+  if(a) a.addEventListener('click', realignStickies);
+  if(p) p.addEventListener('click', postSticky);
+})();
 
 try {
   onSnapshot(query(collection(db,'director_tasks'),orderBy('createdAt','desc')),snap=>{

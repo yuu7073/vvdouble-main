@@ -1015,6 +1015,40 @@ function rSettings(){
 }
 
 
+// ── BUILD COLOR ROW ──
+function buildColorRow(){
+  const el = document.getElementById('colorRow');
+  if(!el) return;
+  const SC_HEX_LOCAL = ['#fff9e6','#ffe8f0','#e8f8ee','#e0f0ff','#fff3e0'];
+  el.innerHTML = SC_HEX_LOCAL.map(function(c, i){
+    return '<div class="scb' + (i===selSC?' sel':'') + '" data-si="' + i + '" style="background:' + c + '"></div>';
+  }).join('');
+}
+
+// ── LINKS PAGE ──
+function rLinks(){
+  var links=JSON.parse(localStorage.getItem('vvLinks')||'null')||[
+    {name:'PM 管理工具',url:'https://yuu7073.github.io/vvdouble-pm/',icon:'📋'},
+    {name:'門市管理工具',url:'https://yuu7073.github.io/vvdoublestore/',icon:'🏪'},
+    {name:'採購管理工具',url:'https://yuu7073.github.io/vvdouble-purchase/',icon:'🛒'},
+  ];
+  var h='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px">';
+  links.forEach(function(lk){
+    var card=document.createElement('a');
+    card.href=lk.url; card.target='_blank'; card.rel='noopener';
+    card.style.textDecoration='none';
+    card.innerHTML='<div class="sc link-card" style="cursor:pointer;display:flex;align-items:center;gap:14px">'
+      +'<span style="font-size:30px">'+lk.icon+'</span>'
+      +'<div><div style="font-size:14px;font-weight:500;color:var(--text)">'+lk.name+'</div>'
+      +'<div style="font-size:11px;color:var(--text3);margin-top:3px;overflow:hidden;text-overflow:ellipsis;max-width:160px;white-space:nowrap">'+lk.url+'</div>'
+      +'</div></div>';
+    h+=card.outerHTML;
+  });
+  h+='</div>';
+  return h;
+}
+
+
 function getStickyPos(idx){
   // 從左下角往右橫向排列
   // 不用 top，改在 renderStickyEl 用 bottom 定位

@@ -75,7 +75,9 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 /* TODAY WIDGETS */
 .today-widgets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
 .widget{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 15px;}
-.widget-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.widget.weather{background:linear-gradient(135deg,#e0f4ff,#b8e8ff);border-color:#7ac8f0;}
+.widget.progress{background:linear-gradient(135deg,#f0e8ff,#ddd0ff);border-color:#b89de8;}
+.widget-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,0.45);margin-bottom:6px;font-weight:600;}
 .widget-val{font-size:22px;font-family:'DM Serif Display',serif;color:var(--text);line-height:1.1;}
 .widget-sub{font-size:11px;color:var(--text3);margin-top:3px;}
 .weather-icon{font-size:28px;margin-bottom:4px;}
@@ -85,10 +87,10 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .ring-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--accent);}
 
 .countdown-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
-.cd-card{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:10px 13px;display:flex;align-items:center;gap:10px;position:relative;min-width:140px;cursor:pointer;}
-.cd-card:hover{border-color:var(--border2);}
-.cd-days{font-size:22px;font-weight:700;font-family:'DM Serif Display',serif;color:var(--accent);line-height:1;}
-.cd-label{font-size:12px;color:var(--text2);margin-top:2px;}
+.cd-card{background:linear-gradient(135deg,#fff3d0,#ffe8a0);border:1px solid #f5c800;border-radius:11px;padding:10px 13px;display:flex;align-items:center;gap:10px;position:relative;min-width:140px;cursor:pointer;}
+.cd-card:hover{border-color:#d4a800;box-shadow:0 2px 8px rgba(245,200,0,.2);}
+.cd-days{font-size:22px;font-weight:700;font-family:'DM Serif Display',serif;color:#b07800;line-height:1;}
+.cd-label{font-size:12px;color:#5a4000;margin-top:2px;font-weight:500;}
 .cd-del{position:absolute;top:5px;right:7px;font-size:12px;color:var(--text3);cursor:pointer;background:none;border:none;opacity:0;}
 .cd-card:hover .cd-del{opacity:1;}
 .cd-del:hover{color:var(--uh);}
@@ -146,7 +148,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .calday.om{opacity:.25;}
 .calnum{font-size:14px;color:var(--text2);margin-bottom:4px;font-weight:500;}
 .calday.today .calnum{color:var(--accent);}
-.calev{font-size:11px;padding:2px 5px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.calev{font-size:11px;padding:2px 6px;border-radius:4px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:4px;}
+.calev::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;background:currentColor;opacity:.7;}
 .calev.marketing{background:var(--mk-b);color:var(--mk);}
 .calev.store{background:var(--st-b);color:var(--st);}
 .calev.finance{background:var(--fi-b);color:var(--fi);}
@@ -210,6 +213,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .note-editor:focus{border-color:var(--accent);}
 .fsize-btn{width:28px;height:28px;border:1.5px solid var(--border);border-radius:6px;background:transparent;color:var(--text2);cursor:pointer;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;}
 .fsize-btn:hover{border-color:var(--accent);color:var(--accent);}
+.color-swatch:hover{transform:scale(1.25);}
 .note-format-btn{padding:4px 10px;border:1.5px solid var(--border);border-radius:6px;background:transparent;color:var(--text2);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;}
 .note-format-btn:hover{border-color:var(--accent);color:var(--accent);}
 .note-format-btn.active{background:var(--accent-s);border-color:var(--accent);color:var(--accent);}
@@ -284,6 +288,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .author-chip.active-yu{background:#e0f0ff;border-color:#3a88d4;color:#3a88d4;}
 .fsize-btn{width:28px;height:28px;border:1.5px solid var(--border);border-radius:6px;background:transparent;color:var(--text2);cursor:pointer;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;}
 .fsize-btn:hover{border-color:var(--accent);color:var(--accent);}
+.color-swatch:hover{transform:scale(1.25);}
 
 /* MOBILE */
 .bnav{display:none;}.fab{display:none;}.fabm{display:none;}
@@ -330,6 +335,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
       <div class="ni" data-page="tasks" data-cat="store"><span class="cdot" style="background:var(--st)"></span><span id="nav-cat-store">門市</span></div>
       <div class="ni" data-page="tasks" data-cat="finance"><span class="cdot" style="background:var(--fi)"></span><span id="nav-cat-finance">財務</span></div>
       <div class="ni" data-page="tasks" data-cat="ops"><span class="cdot" style="background:var(--op)"></span><span id="nav-cat-ops">營運</span></div>
+      <div class="nav-sec">工具</div>
+      <div class="ni" data-page="links"><span class="nicon">🔗</span><span>常用連結</span></div>
       <div class="nav-sec">系統</div>
       <div class="ni" data-page="settings"><span class="nicon">⚙</span><span>設定</span></div>
     </div>
@@ -404,6 +411,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
       <div class="fg"><label class="fl">提醒</label><select class="fs" id="eventRemind"><option value="">不提醒</option><option value="same">當天早上9點</option><option value="1h">1小時前</option><option value="1d">前1天</option></select></div>
     </div>
     <div class="fg"><label class="fl">備註</label><textarea class="fi" id="eventNote" rows="2" placeholder="地點、相關資訊..."></textarea></div>
+    <div class="fg"><label class="fl">重複</label><select class="fs" id="eventRepeat"><option value="">不重複</option><option value="daily">每天</option><option value="weekly">每週</option><option value="monthly">每月</option><option value="yearly">每年</option></select></div>
     <div class="mf">
       <button class="btn bd bs hidden" id="eventDeleteBtn">刪除</button>
       <button class="btn bg bs" id="eventCancelBtn">取消</button>
@@ -419,6 +427,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
     <div class="bni" data-bnav="tasks"><div class="bni-icon">≡</div><div class="bni-lbl">任務</div></div>
     <div class="bni" data-bnav="stickies"><div class="bni-icon">◧</div><div class="bni-lbl">便利貼</div></div>
     <div class="bni" data-bnav="notes"><div class="bni-icon">✎</div><div class="bni-lbl">筆記</div></div>
+    <div class="bni" data-bnav="links"><div class="bni-icon">🔗</div><div class="bni-lbl">連結</div></div>
   </div>
 </nav>
 <div class="fabm" id="fabMenu">
@@ -452,13 +461,16 @@ const URD = {high:0,mid:1,low:2};
 
 // ── CATEGORY SETTINGS ──
 let cats = JSON.parse(localStorage.getItem('vvCats')||'null') || [
-  {id:'marketing',name:'行銷',color:'var(--mk)'},
-  {id:'store',name:'門市',color:'var(--st)'},
-  {id:'finance',name:'財務',color:'var(--fi)'},
-  {id:'ops',name:'營運',color:'var(--op)'},
+  {id:'marketing',name:'行銷',color:'#9b7fd4',bg:'#f0ebfb'},
+  {id:'store',name:'門市',color:'#5a9ec4',bg:'#e8f3f9'},
+  {id:'finance',name:'財務',color:'#4caf7d',bg:'#e6f4ec'},
+  {id:'ops',name:'營運',color:'#c47a5a',bg:'#f9ede7'},
 ];
+function catColor(c){ return c.color||'#888'; }
+function catBg(c){ return c.bg||'#f0f0f0'; }
 function saveCats(){ localStorage.setItem('vvCats',JSON.stringify(cats)); }
 function getCatName(id){ return (cats.find(c=>c.id===id)||{name:id}).name; }
+function getCat(id){ return cats.find(c=>c.id===id)||{id,name:id,color:'#888',bg:'#f0f0f0'}; }
 function buildCatSelects(){
   const opts = cats.map(c=>'<option value="'+c.id+'">'+c.name+'</option>').join('');
   ['taskCat','eventCat'].forEach(id=>{ const el=$(id); if(el) el.innerHTML=opts; });
@@ -466,6 +478,13 @@ function buildCatSelects(){
     const el=$('nav-cat-'+c.id);
     if(el) el.textContent=c.name;
   });
+  // 動態注入 cat CSS
+  let styleEl=document.getElementById('catDynStyle');
+  if(!styleEl){ styleEl=document.createElement('style'); styleEl.id='catDynStyle'; document.head.appendChild(styleEl); }
+  styleEl.textContent=cats.map(c=>
+    '.cat-'+c.id+'{background:'+catBg(c)+';color:'+catColor(c)+';font-weight:600;}'
+    +'.calev.'+c.id+'{background:'+catBg(c)+';color:'+catColor(c)+';}'
+  ).join('');
 }
 
 // ── STATE ──
@@ -600,7 +619,7 @@ function goPage(p){
   page=p;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   document.querySelectorAll('.ni[data-page="'+p+'"]').forEach(n=>{ if(!n.dataset.cat||n.dataset.cat===filter) n.classList.add('active'); });
-  const T={today:'今日看板',calendar:'月曆',tasks:'任務清單',stickies:'便利貼',notes:'隨手筆記',settings:'設定'};
+  const T={today:'今日看板',calendar:'月曆',tasks:'任務清單',stickies:'便利貼',notes:'隨手筆記',settings:'設定',links:'常用連結'};
   $('pageTitle').textContent=T[p]||p;
   render();
 }
@@ -613,6 +632,7 @@ function render(){
   else if(page==='stickies') c.innerHTML=rStickiesPage();
   else if(page==='notes') c.innerHTML=rNotes();
   else if(page==='settings') c.innerHTML=rSettings();
+  else if(page==='links') c.innerHTML=rLinks();
   else c.innerHTML=rTasks();
   bind();
 }
@@ -661,14 +681,7 @@ function rToday(){
   });
   cdHtml+='<button class="cd-add" data-action="cd-add">＋ 新增倒數</button></div>';
 
-  // ── 快速新增 ──
-  const catOpts=cats.map(c=>'<option value="'+c.id+'">'+c.name+'</option>').join('');
-  const quickAdd='<div class="quick-add">'
-    +'<input class="quick-input" id="quickInput" placeholder="快速新增任務... 按 Enter 送出"/>'
-    +'<select class="quick-cat" id="quickCat">'+catOpts+'</select>'
-    +'<select class="quick-cat" id="quickUrgency" style="width:auto">'
-    +'<option value="high">🔴</option><option value="mid" selected>🟡</option><option value="low">⚪</option>'
-    +'</select></div>';
+  const quickAdd=''; // removed
 
   // ── 左欄 ──
   let L='<div class="sc">'
@@ -676,8 +689,8 @@ function rToday(){
     +'<div class="tsub">週'+WD[now.getDay()]+'　'+now.getFullYear()+'</div>';
 
   L+='<div class="today-widgets">'
-    +'<div class="widget"><div class="widget-label">天氣</div>'+weatherHtml+'</div>'
-    +'<div class="widget"><div class="widget-label">本週進度</div>'
+    +'<div class="widget weather"><div class="widget-label">天氣</div>'+weatherHtml+'</div>'
+    +'<div class="widget progress"><div class="widget-label">本週進度</div>'
     +'<div class="progress-ring">'
     +'<div class="ring-wrap"><svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="none" stroke="var(--border)" stroke-width="4"/><circle cx="24" cy="24" r="18" fill="none" stroke="var(--accent)" stroke-width="4" stroke-dasharray="'+dash+' '+circumference+'" stroke-linecap="round"/></svg><div class="ring-center">'+pct+'%</div></div>'
     +'<div><div class="widget-val" style="font-size:18px">'+weekDone+' / '+weekTotal+'</div><div class="widget-sub">本週完成 / 全部</div></div>'
@@ -689,7 +702,10 @@ function rToday(){
 
   if(todayEvs.length){
     L+='<div class="ug"><div class="ul"><span style="color:var(--accent)">📅 今日行程</span><div class="uln"></div></div>';
-    todayEvs.forEach(ev=>{ L+='<div class="ei" data-id="'+ev.id+'" data-type="ev"><div class="et">'+(ev.time||'')+'</div><div class="tb"><div class="tt">'+ev.title+'</div><div class="tm"><span class="tc cat-'+ev.cat+'">'+getCatName(ev.cat)+'</span>'+(ev.note?'<span class="td">'+ev.note+'</span>':'')+'</div></div></div>'; });
+    todayEvs.forEach(ev=>{
+      const repeatTag=ev.repeat?'<span style="font-size:9px;color:var(--text3);margin-left:2px">↻ 重複</span>':'';
+      L+='<div class="ei" data-id="'+ev.id+'" data-type="ev"><div class="et">'+(ev.time||'')+'</div><div class="tb"><div class="tt">'+ev.title+repeatTag+'</div><div class="tm"><span class="tc cat-'+ev.cat+'">'+getCatName(ev.cat)+'</span>'+(ev.note?'<span class="td">'+ev.note+'</span>':'')+'</div></div></div>';
+    });
     L+='</div>';
   }
   if(hi.length){ L+='<div class="ug"><div class="ul"><span style="color:var(--uh)">● 緊急</span><div class="uln"></div></div>'; hi.forEach(t=>{L+=tHTML(t);}); L+='</div>'; }
@@ -753,10 +769,25 @@ function rCal(inline){
   for(let day=1;day<=dim;day++){
     const ds=calY+'-'+String(calM+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
     const isT=ds===tday;
-    const de=events.filter(e=>e.date===ds), dt=tasks.filter(t=>t.due===ds&&!t.done);
+    // 包含重複行程
+  const de=events.filter(e=>{
+    if(e.date===ds) return true;
+    if(!e.repeat||!e.date) return false;
+    const orig=new Date(e.date), cur=new Date(ds);
+    if(cur<orig) return false;
+    if(e.repeat==='daily') return true;
+    if(e.repeat==='weekly') return orig.getDay()===cur.getDay();
+    if(e.repeat==='monthly') return orig.getDate()===cur.getDate();
+    if(e.repeat==='yearly') return orig.getMonth()===cur.getMonth()&&orig.getDate()===cur.getDate();
+    return false;
+  });
+  const dt=tasks.filter(t=>t.due===ds&&!t.done);
     h+='<div class="calday'+(isT?' today':'')+'" data-action="cal-day" data-date="'+ds+'">'
       +'<div class="calnum">'+day+'</div>';
-    de.forEach(ev=>{ h+='<div class="calev '+ev.cat+'" data-id="'+ev.id+'" data-type="ev">'+(ev.time?ev.time.slice(0,5)+' ':'')+ev.title+'</div>'; });
+    de.forEach(ev=>{
+      const repeatBadge=ev.repeat?'<span style="font-size:8px;opacity:.6;margin-left:2px">↻</span>':'';
+      h+='<div class="calev '+ev.cat+'" data-id="'+ev.id+'" data-type="ev">'+(ev.time?ev.time.slice(0,5)+' ':'')+ev.title+repeatBadge+'</div>';
+    });
     dt.forEach(t=>{ h+='<div class="calev '+t.cat+'">'+t.title+'</div>'; });
     h+='</div>';
   }
@@ -922,47 +953,73 @@ function rNoteEditor(){
 
 // ── SETTINGS ──
 function rSettings(){
+  const PRESET_COLORS=[
+    {color:'#e8507a',bg:'#ffe8f0'},{color:'#f5a623',bg:'#fff4e0'},
+    {color:'#4caf7d',bg:'#e6f4ec'},{color:'#5a9ec4',bg:'#e8f3f9'},
+    {color:'#9b7fd4',bg:'#f0ebfb'},{color:'#c47a5a',bg:'#f9ede7'},
+    {color:'#e05c5c',bg:'#fdeaea'},{color:'#3a8fd4',bg:'#e0f0ff'},
+    {color:'#d4a843',bg:'#fff8e0'},{color:'#7ac4a0',bg:'#e0f5ec'},
+    {color:'#b87abd',bg:'#f5e8ff'},{color:'#666',bg:'#f0f0f0'},
+  ];
   let h='<div class="settings-section">'
     +'<div class="settings-title">分類標籤設定</div>'
-    +'<div style="font-size:12px;color:var(--text3);margin-bottom:12px">修改分類名稱後按「儲存設定」生效</div>';
+    +'<div style="font-size:12px;color:var(--text3);margin-bottom:14px">可新增、刪除、改名、選顏色</div>';
+
   cats.forEach((c,i)=>{
-    h+='<div class="cat-item" data-cat-idx="'+i+'">'
-      +'<div class="cat-color" style="background:'+c.color+'"></div>'
-      +'<input class="cat-name-input" data-cat-id="'+c.id+'" value="'+c.name+'" placeholder="分類名稱"/>'
-      +'<span class="cat-order" title="拖曳排序">⠿</span>'
+    const swatches=PRESET_COLORS.map((p,pi)=>'<span data-swatch-cat="'+i+'" data-swatch-color="'+p.color+'" data-swatch-bg="'+p.bg+'" title="'+p.color+'" class="color-swatch" style="display:inline-block;width:18px;height:18px;border-radius:50%;background:'+p.color+';cursor:pointer;border:2px solid '+(c.color===p.color?'#333':'transparent')+';flex-shrink:0;transition:transform .1s"></span>').join('');
+    h+='<div class="cat-item" style="flex-wrap:wrap;gap:8px;align-items:flex-start">'
+      +'<div style="display:flex;align-items:center;gap:8px;width:100%">'
+      +'<div class="cat-color" style="background:'+catColor(c)+';width:12px;height:12px;border-radius:50%;flex-shrink:0"></div>'
+      +'<input class="cat-name-input" data-cat-idx="'+i+'" value="'+c.name+'" placeholder="分類名稱" style="flex:1"/>'
+      +'<button class="btn bd bs" data-cat-del="'+i+'" style="padding:3px 9px;font-size:11px">刪除</button>'
+      +'</div>'
+      +'<div style="display:flex;gap:5px;flex-wrap:wrap;padding-left:20px">'+swatches+'</div>'
       +'</div>';
   });
-  h+='<div style="margin-top:14px;display:flex;gap:8px">'
+
+  h+='<div style="margin-top:12px;display:flex;gap:8px">'
     +'<button class="btn bp bs" data-action="save-cats">儲存設定</button>'
+    +'<button class="btn bg bs" data-action="add-cat">＋ 新增分類</button>'
     +'<button class="btn bg bs" data-action="reset-cats">還原預設</button>'
-    +'</div></div>'
-    +'<div class="settings-section">'
+    +'</div></div>';
+
+  // 常用連結
+  let links=JSON.parse(localStorage.getItem('vvLinks')||'null')||[
+    {name:'PM 管理工具',url:'https://yuu7073.github.io/vvdouble-pm/',icon:'📋'},
+    {name:'門市管理工具',url:'https://yuu7073.github.io/vvdoublestore/',icon:'🏪'},
+    {name:'採購管理工具',url:'https://yuu7073.github.io/vvdouble-purchase/',icon:'🛒'},
+  ];
+  h+='<div class="settings-section">'
+    +'<div class="settings-title">常用連結</div>';
+  links.forEach((lk,i)=>{
+    h+='<div class="cat-item" style="gap:8px">'
+      +'<span style="font-size:16px">'+lk.icon+'</span>'
+      +'<input class="cat-name-input" data-link-name="'+i+'" value="'+lk.name+'" style="width:120px;flex:none"/>'
+      +'<input class="cat-name-input" data-link-url="'+i+'" value="'+lk.url+'" style="flex:1"/>'
+      +'<button class="btn bd bs" data-link-del="'+i+'" style="padding:3px 9px;font-size:11px">刪除</button>'
+      +'</div>';
+  });
+  h+='<div style="margin-top:10px;display:flex;gap:8px">'
+    +'<button class="btn bp bs" data-action="save-links">儲存連結</button>'
+    +'<button class="btn bg bs" data-action="add-link">＋ 新增連結</button>'
+    +'</div></div>';
+
+  // 深淺色
+  h+='<div class="settings-section">'
     +'<div class="settings-title">其他設定</div>'
     +'<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">'
     +'<span style="font-size:13px">深色模式</span>'
     +'<button class="btn bg bs" id="settingsThemeBtn">'+(dark?'目前：深色 ☽':'目前：淺色 ☀')+'</button></div>'
-    +'<div style="display:flex;align-items:center;gap:12px;padding:10px 0">'
-    +'<span style="font-size:13px">資料同步狀態</span>'
-    +'<span style="font-size:12px;color:var(--text3)" id="settingsSyncStatus"></span></div>'
     +'</div>';
   return h;
 }
 
-// ── STICKY FLOAT ──
-// ── STICKY ENGINE (仿 PM 工具浮動層) ──
-const STICKY_PANEL_H = 96; // sticky-panel 高度
-const STICKY_W = 200;
-const STICKY_GAP = 12;
-const STICKY_START_X = 24;
-
-window.stickyUserMoved = {};
-window._stickyDrag = false;
 
 function getStickyPos(idx){
   // 從左下角往右橫向排列
+  // 不用 top，改在 renderStickyEl 用 bottom 定位
   const x = STICKY_START_X + idx * (STICKY_W + STICKY_GAP);
-  const y = window.innerHeight - STICKY_PANEL_H - STICKY_GAP - 140;
-  return { x: Math.max(0, x), y: Math.max(60, y) };
+  return { x: Math.max(0, x), bottom: 66 };
 }
 
 function renderStickyEl(s){
@@ -979,9 +1036,16 @@ function renderStickyEl(s){
   const pos = getStickyPos(idx);
 
   el.style.left = (userMoved && s.x != null ? s.x : pos.x) + 'px';
-  el.style.top  = (userMoved && s.y != null ? s.y : pos.y) + 'px';
+  // 用 bottom 定位讓便利貼貼齊工具列頂部
+  if(userMoved && s.y != null){
+    el.style.top = s.y + 'px';
+    el.style.bottom = '';
+  } else {
+    el.style.bottom = pos.bottom + 'px';
+    el.style.top = '';
+  }
   el.style.zIndex = '51';
-  el.style.position = 'absolute';
+  el.style.position = 'fixed';
 
   el.innerHTML =
     '<div class="sth">'
@@ -1001,9 +1065,10 @@ function repositionStickies(){
     const el = document.getElementById('s-' + s.fbKey);
     if(!el) return;
     if((window.stickyUserMoved||{})[s.fbKey]) return;
-    const pos = getStickyPos(idx);
-    el.style.left = pos.x + 'px';
-    el.style.top  = pos.y + 'px';
+    const x = STICKY_START_X + idx * (STICKY_W + STICKY_GAP);
+    el.style.left = Math.max(0, x) + 'px';
+    el.style.bottom = '66px';
+    el.style.top = '';
   });
 }
 
@@ -1013,10 +1078,11 @@ function realignStickies(){
   items.forEach(function(s, idx){
     const el = document.getElementById('s-' + s.fbKey);
     if(!el) return;
-    const pos = getStickyPos(idx);
-    el.style.transition = 'left .4s cubic-bezier(.4,0,.2,1), top .4s cubic-bezier(.4,0,.2,1)';
-    el.style.left = pos.x + 'px';
-    el.style.top  = pos.y + 'px';
+    const x = STICKY_START_X + idx * (STICKY_W + STICKY_GAP);
+    el.style.transition = 'left .4s cubic-bezier(.4,0,.2,1), bottom .4s cubic-bezier(.4,0,.2,1)';
+    el.style.left = Math.max(0, x) + 'px';
+    el.style.bottom = '66px';
+    el.style.top = '';
     setTimeout(function(){ el.style.transition = ''; }, 450);
   });
   showToast('便利貼已對齊 ✓');
@@ -1095,6 +1161,11 @@ function makeDraggable(el, s){
   el.addEventListener('mousedown', function(e){
     if(e.target.classList.contains('st-close')) return;
     drag = true; window._stickyDrag = false;
+    // 切換到 top 定位方便拖曳計算
+    if(el.style.bottom){
+      el.style.top = el.getBoundingClientRect().top + 'px';
+      el.style.bottom = '';
+    }
     ox = e.clientX - el.offsetLeft; oy = e.clientY - el.offsetTop;
     el.style.zIndex = '99'; e.preventDefault();
   });
@@ -1244,18 +1315,60 @@ function bind(){
   }); });
 
   // settings
+  // settings - save cats
   document.querySelectorAll('[data-action="save-cats"]').forEach(el=>{ el.addEventListener('click',()=>{
-    document.querySelectorAll('.cat-name-input').forEach(inp=>{ const c=cats.find(x=>x.id===inp.dataset.catId); if(c) c.name=inp.value.trim()||c.name; });
+    document.querySelectorAll('[data-cat-idx]').forEach(inp=>{
+      const i=parseInt(inp.dataset.catIdx);
+      if(cats[i]) cats[i].name=inp.value.trim()||cats[i].name;
+    });
     saveCats(); buildCatSelects(); render(); showToast('設定已儲存 ✓');
   }); });
+  document.querySelectorAll('[data-action="add-cat"]').forEach(el=>{ el.addEventListener('click',()=>{
+    cats.push({id:'cat'+Date.now(),name:'新分類',color:'#888',bg:'#f0f0f0'});
+    saveCats(); buildCatSelects(); render();
+  }); });
+  document.querySelectorAll('[data-cat-del]').forEach(el=>{ el.addEventListener('click',()=>{
+    const i=parseInt(el.dataset.catDel);
+    if(cats.length<=1){ showToast('至少保留一個分類'); return; }
+    if(!confirm('確定刪除「'+cats[i].name+'」分類？')) return;
+    cats.splice(i,1); saveCats(); buildCatSelects(); render();
+  }); });
   document.querySelectorAll('[data-action="reset-cats"]').forEach(el=>{ el.addEventListener('click',()=>{
-    cats=[{id:'marketing',name:'行銷',color:'var(--mk)'},{id:'store',name:'門市',color:'var(--st)'},{id:'finance',name:'財務',color:'var(--fi)'},{id:'ops',name:'營運',color:'var(--op)'}];
+    cats=[{id:'marketing',name:'行銷',color:'#9b7fd4',bg:'#f0ebfb'},{id:'store',name:'門市',color:'#5a9ec4',bg:'#e8f3f9'},{id:'finance',name:'財務',color:'#4caf7d',bg:'#e6f4ec'},{id:'ops',name:'營運',color:'#c47a5a',bg:'#f9ede7'}];
     saveCats(); buildCatSelects(); render(); showToast('已還原預設');
+  }); });
+  // swatch color picker
+  document.querySelectorAll('[data-swatch-cat]').forEach(el=>{ el.addEventListener('click',()=>{
+    const i=parseInt(el.dataset.swatchCat);
+    if(cats[i]){ cats[i].color=el.dataset.swatchColor; cats[i].bg=el.dataset.swatchBg; }
+    // visual feedback - no full re-render
+    document.querySelectorAll('[data-swatch-cat="'+i+'"]').forEach(s=>s.style.borderColor='transparent');
+    el.style.borderColor='var(--text)';
+    document.querySelectorAll('[data-cat-idx="'+i+'"]').forEach(inp=>{
+      const dot=inp.closest('.cat-item').querySelector('.cat-color');
+      if(dot) dot.style.background=el.dataset.swatchColor;
+    });
+  }); });
+  // links
+  document.querySelectorAll('[data-action="save-links"]').forEach(el=>{ el.addEventListener('click',()=>{
+    const links=[];
+    const names=[...document.querySelectorAll('[data-link-name]')];
+    const urls=[...document.querySelectorAll('[data-link-url]')];
+    names.forEach((n,i)=>{ if(urls[i]) links.push({name:n.value.trim(),url:urls[i].value.trim(),icon:'🔗'}); });
+    localStorage.setItem('vvLinks',JSON.stringify(links)); showToast('連結已儲存 ✓');
+  }); });
+  document.querySelectorAll('[data-action="add-link"]').forEach(el=>{ el.addEventListener('click',()=>{
+    const links=JSON.parse(localStorage.getItem('vvLinks')||'[]');
+    links.push({name:'新連結',url:'https://',icon:'🔗'});
+    localStorage.setItem('vvLinks',JSON.stringify(links)); render();
+  }); });
+  document.querySelectorAll('[data-link-del]').forEach(el=>{ el.addEventListener('click',()=>{
+    const links=JSON.parse(localStorage.getItem('vvLinks')||'[]');
+    links.splice(parseInt(el.dataset.linkDel),1);
+    localStorage.setItem('vvLinks',JSON.stringify(links)); render();
   }); });
   const stb=$('settingsThemeBtn');
   if(stb){ stb.addEventListener('click',()=>{ dark=!dark; localStorage.setItem('vvTheme',dark?'dark':'light'); applyTheme(); render(); }); }
-  const ssl=$('settingsSyncStatus');
-  if(ssl){ ssl.textContent=$('syncText').textContent; }
 }
 
 // ── NOTE CRUD ──
